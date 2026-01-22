@@ -12,46 +12,46 @@ app.get('/', (req, res) => {
 })
 
 app.post(baseURL+"", (req, res) => {
-
-    setTimeout(() => {
-
-         res.send({
-                "status" : 200,
-                "message" : "completed"
-            })
-        
-    }, 7000);
-  
-
+  console.log("Server :: POST : Log Upload Request")
   console.log(req.body)
   employeeDataList.push(req.body)
 })
 
 app.get(baseURL+"", (req, res) => {
+  console.log("Server :: GET : Get Log Request")
+
   res.send({
     "status" : 200,
     "message" : "completed",
     "result" : employeeDataList
   })
-  
-  employeeDataList.push(res.get)
 })
 
 app.delete(baseURL+":id", (req, res) => {
+  console.log("Server :: DELETE : Delete Log With Id "+req.params.id+" Request")
+
   let index = employeeDataList.findIndex(element => element.employeeId === req.params.id);
   if (index !== -1) {
     employeeDataList.splice(index, 1);
-}
+  }
+  res.send({
+          "status" : 200,
+          "message" : "completed"
+  })
+
+})
+
+app.delete(baseURL, (req, res) => {
+  console.log("Server :: DELETE : Delete All Log Request")
+
+  employeeDataList = []
    res.send({
             "status" : 200,
             "message" : "completed"
-    })
-  console.log(req.params.id)
+
+  })
 })
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
